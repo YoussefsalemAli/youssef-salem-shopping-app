@@ -1,8 +1,21 @@
-# shopping_app_sprints
+# 🛍️ Shopping App
 
-A new Flutter project.
+## 📖 Overview
+A Flutter shopping app built as part of the **Sprints Project**.  
+It provides a smooth onboarding experience, sign-up/sign-in forms, and a shopping home screen with featured products, cart, and hot offers.
 
-## Getting Started
+## ✨ Features
+- **Sign Up / Sign In** with validation:
+  - Full Name (first letter uppercase)
+  - Email (must contain `@`)
+  - Password (min. 6 characters, confirmed)
+- **Smooth Navigation**.
+- **Shopping Home Screen**:
+  - AppBar titled *Our Products*  
+  - Horizontal `PageView` for featured products  
+  - `GridView` for product cards (with add-to-cart snackbar)  
+  - Hot Offers list (5 vertical offers with image + description)
+
 
 This project is a starting point for a Flutter application.
 
