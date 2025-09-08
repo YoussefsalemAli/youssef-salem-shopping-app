@@ -6,7 +6,7 @@ class Images extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 220,
+      width: 175,
       height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

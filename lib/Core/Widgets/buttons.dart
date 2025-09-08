@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Buttons extends StatelessWidget {
-  const Buttons({super.key, required this.title, required this.nextScreen});
+  const Buttons({
+    super.key,
+    required this.title,
+    this.nextScreen,
+    this.onPressed,
+  });
   final String? title;
-  final Widget nextScreen;
+  final Widget? nextScreen;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -14,12 +20,7 @@ class Buttons extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,
       ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => nextScreen),
-        );
-      },
+      onPressed: onPressed,
       child: Text(
         '$title',
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.end,
                 ),
               ),
-              ListViewBuilder(),
+              CustomListViewBuilder(),
             ],
           ),
         ),

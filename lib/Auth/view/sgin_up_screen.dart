@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app_sprints/Core/Widgets/text_form_field.dart';
 import 'package:shopping_app_sprints/home/view/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,22 +20,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState!.validate()) {
       showDialog(
         context: context,
-        builder: (_) => AlertDialog(
-          title: const Text("Success"),
-          content: const Text("Account created successfully"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              },
-              child: const Text("Close"),
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              "Success",
+              style: TextStyle(
+                fontFamily: 'Suwannaphum',
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
             ),
-          ],
-        ),
+            content: const Text(
+              "Account sign-in successfully",
+              style: TextStyle(
+                fontFamily: 'Suwannaphum',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const HomeScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                      transitionDuration: const Duration(milliseconds: 500),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Close",
+                  style: TextStyle(
+                    fontFamily: 'Suwannaphum',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -68,10 +105,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             key: _formKey,
             child: ListView(
               children: [
-                TextFormField(
+                CustomTextFormField(
                   controller: _nameController,
-                  cursorColor: Colors.black,
-                  decoration: _inputDecoration("Full Name"),
+                  hintText: "Full Name",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Enter your full name";
@@ -84,10 +120,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 15),
 
-                TextFormField(
+                CustomTextFormField(
                   controller: _emailController,
-                  cursorColor: Colors.black,
-                  decoration: _inputDecoration("Email"),
+                  hintText: "Email",
+                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || !value.contains('@')) {
                       return "Enter a valid email";
@@ -95,24 +131,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 15),
-                TextFormField(
+                CustomTextFormField(
                   controller: _passwordController,
-                  cursorColor: Colors.black,
-                  decoration: _inputDecoration("Password").copyWith(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {});
-                        (() {
-                          showPassword = !showPassword;
-                        });
-                      },
-                      icon: Icon(
-                        showPassword ? Icons.visibility : Icons.visibility_off,
-                      ),
-                    ),
-                  ),
-                  obscureText: !showPassword,
+                  hintText: "Password",
+                  isPassword: true,
                   validator: (value) {
                     if (value == null || value.length < 6) {
                       return "Password must be at least 6 characters";
@@ -122,12 +146,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 15),
 
-                TextFormField(
+                CustomTextFormField(
+                  isPassword: true,
                   controller: _confirmPasswordController,
-                  cursorColor: Colors.black,
-                  decoration: _inputDecoration("Confirm Password"),
-                  obscureText: true,
+                  hintText: "Confirm Password",
+
                   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please confirm your password";
+                    }
                     if (value != _passwordController.text) {
                       return "Passwords do not match";
                     }
@@ -160,25 +187,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: Colors.black, width: 2),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: Colors.red, width: 2),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: Colors.black, width: 2),
-      ),
-      hintText: hint,
-      hintStyle: const TextStyle(fontSize: 18, color: Colors.black45),
     );
   }
 }

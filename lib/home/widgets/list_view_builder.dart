@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app_sprints/home/widgets/product_lists.dart';
 
-class ListViewBuilder extends StatelessWidget {
-  const ListViewBuilder({super.key});
+class CustomListViewBuilder extends StatelessWidget {
+  const CustomListViewBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {

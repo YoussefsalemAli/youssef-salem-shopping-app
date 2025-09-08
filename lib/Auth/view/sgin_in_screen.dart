@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app_sprints/Core/Widgets/buttons.dart';
+import 'package:shopping_app_sprints/Core/Widgets/text_form_field.dart';
 import 'package:shopping_app_sprints/home/view/home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -17,22 +19,58 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState!.validate()) {
       showDialog(
         context: context,
-        builder: (_) => AlertDialog(
-          title: const Text("Success"),
-          content: const Text("Account sign-in successfully"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              },
-              child: const Text("Close"),
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              "Success",
+              style: TextStyle(
+                fontFamily: 'Suwannaphum',
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
             ),
-          ],
-        ),
+            content: const Text(
+              "Account sign-in successfully",
+              style: TextStyle(
+                fontFamily: 'Suwannaphum',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const HomeScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                      transitionDuration: const Duration(milliseconds: 500),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Close",
+                  style: TextStyle(
+                    fontFamily: 'Suwannaphum',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -64,35 +102,13 @@ class _SignInScreenState extends State<SignInScreen> {
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
               children: [
-                TextFormField(
+                CustomTextFormField(
                   controller: _emailController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Colors.red, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    hintText: "Enter Your Email",
-
-                    hintStyle: TextStyle(fontSize: 20, color: Colors.black45),
-                  ),
+                  hintText: "Enter Your Email",
+                  isPassword: false,
+                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || !value.contains('@')) {
                       return "Enter a valid email";
@@ -101,47 +117,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                 ),
                 const SizedBox(height: 15),
-
-                TextFormField(
+                CustomTextFormField(
                   controller: _passwordController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Colors.red, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    hintText: "Enter Your Password",
-                    hintStyle: TextStyle(fontSize: 20, color: Colors.black45),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          showPassword = !showPassword;
-                        });
-                      },
-                      icon: Icon(
-                        showPassword
-                            ? Icons.visibility_sharp
-                            : Icons.visibility_off,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  obscureText: !showPassword,
-
+                  hintText: "Enter Your Password",
+                  isPassword: true,
+                  keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value == null || value.length < 6) {
                       return "Password must be at least 6 characters";
@@ -149,24 +129,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 30),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 15,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 5,
-                  ),
-                  onPressed: _signIn,
-                  child: const Text("Sign In"),
-                ),
+                const SizedBox(height: 30),
+                Buttons(title: 'Sign In', onPressed: _signIn),
               ],
             ),
           ),

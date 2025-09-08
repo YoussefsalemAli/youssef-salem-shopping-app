@@ -44,26 +44,62 @@ class StartScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Images(imageProvider: AssetImage('assets/Img/Tech.jpg')),
-
-                const SizedBox(width: 20),
-                Images(
-                  imageProvider: NetworkImage(
-                    'https://images.unsplash.com/photo-1441986300917-64674bd600d8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RvcmV8ZW58MHx8MHx8fDA%3D',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Images(imageProvider: AssetImage('assets/Img/Tech.jpg')),
+                  const SizedBox(width: 10),
+                  Images(
+                    imageProvider: NetworkImage(
+                      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RvcmV8ZW58MHx8MHx8fDA%3D',
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Buttons(nextScreen: SignInScreen(), title: 'Sgin In'),
+                Buttons(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            SignInScreen(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+                      ),
+                    );
+                  },
+                  title: 'Sgin In',
+                ),
                 SizedBox(width: 20),
-                Buttons(nextScreen: SignUpScreen(), title: 'Sgin Up'),
+                Buttons(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            SignUpScreen(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+                      ),
+                    );
+                  },
+                  title: 'Sgin Up',
+                ),
               ],
             ),
           ],
