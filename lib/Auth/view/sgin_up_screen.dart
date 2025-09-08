@@ -32,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             content: const Text(
-              "Account sign-in successfully",
+              "Account created successfully",
               style: TextStyle(
                 fontFamily: 'Suwannaphum',
                 fontSize: 20,
